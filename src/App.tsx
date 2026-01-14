@@ -1,0 +1,86 @@
+import { Toaster } from "@/components/ui/toaster";
+import { Toaster as Sonner } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AuthProvider } from "@/contexts/AuthContext";
+import Index from "./pages/Index";
+import Auth from "./pages/Auth";
+import About from "./pages/About";
+import AnimeDetail from "./pages/AnimeDetail";
+import Watchlist from "./pages/Watchlist";
+import History from "./pages/History";
+import Series from "./pages/Series";
+import Movies from "./pages/Movies";
+import AdminDashboard from "./pages/admin/Dashboard";
+import Categories from "./pages/admin/Categories";
+import AnimeManagement from "./pages/admin/Anime";
+import Episodes from "./pages/admin/Episodes";
+import Upload from "./pages/admin/Upload";
+import UploadMovie from "./pages/admin/UploadMovie";
+import MoviesManagement from "./pages/admin/Movies";
+import CarouselManagement from "./pages/admin/Carousel";
+import NotFound from "./pages/NotFound";
+import ContactPage from "./pages/ContactPage";
+import Manga from "./pages/Manga";
+import { Analytics } from "@vercel/analytics/react";
+import MoviesSectionLoading from "./components/Loading";
+
+const queryClient = new QueryClient();
+
+const App = () => (
+  <QueryClientProvider client={queryClient}>
+    <TooltipProvider>
+      <Toaster />
+      <Analytics />
+      <Sonner />
+      <BrowserRouter>
+        <AuthProvider>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/auth" element={<Auth />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/watchlist" element={<Watchlist />} />
+            <Route path="/history" element={<History />} />
+            <Route path="/contact" element={<ContactPage />} />
+
+            <Route path="/anime/:id" element={<AnimeDetail />} />
+            <Route path="movies/:id" element={<AnimeDetail />} />
+            
+            <Route path="/series" element={<Series />} />
+            <Route path="/movies" element={<Movies />} />
+     
+            <Route path="/manga" element={<Manga />} />
+
+
+            {/* home anime  */}
+            <Route path="/home/series/:id" element={<AnimeDetail />} />
+            <Route path="/home/movies/:id" element={<AnimeDetail />} />
+            <Route path="/home/latastanime/:id" element={<AnimeDetail />} />
+
+
+            <Route path="/home/movies" element={<Movies />} />
+            <Route path="/home/series" element={<Series />} />
+            {/* <Route path="/home" element={<Index />} /> */}
+            <Route path="/home/series/:id" element={<AnimeDetail />} />
+
+
+
+            <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/admin/categories" element={<Categories />} />
+            <Route path="/admin/anime" element={<AnimeManagement />} />
+            <Route path="/admin/episodes" element={<Episodes />} />
+            <Route path="/admin/upload" element={<Upload />} />
+            <Route path="/admin/upload-movie" element={<UploadMovie />} />
+            <Route path="/admin/movies" element={<MoviesManagement />} />
+            <Route path="/admin/carousel" element={<CarouselManagement />} />
+            
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </AuthProvider>
+      </BrowserRouter>
+    </TooltipProvider>
+  </QueryClientProvider>
+);
+
+export default App;
